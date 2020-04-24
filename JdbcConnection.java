@@ -9,7 +9,7 @@ public class JdbcConnection {
       try {
          Class.forName("org.postgresql.Driver");
          c = DriverManager
-            .getConnection("jdbc:postgresql://localhost:5432/testdb",
+            .getConnection("jdbc:postgresql://localhost:5432/postgres",
             "postgres", "123456");
       } catch (Exception e) {
          e.printStackTrace();
