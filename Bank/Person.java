@@ -18,8 +18,20 @@ public abstract class Person {
         this.pwd = pwd;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setPwd(String pwd){
+        this.pwd = pwd;
+    }
+
     public String getName(){
         return this.name;
+    }
+
+    public String getPwd(){
+        return this.pwd;
     }
 
     
