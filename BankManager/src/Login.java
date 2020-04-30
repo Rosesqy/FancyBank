@@ -14,9 +14,9 @@ public class Login extends JDialog implements ActionListener {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private DbHelperPSQL dbcon;
-    Connection connection;
-    Statement st;
-    ResultSet set;
+    private Connection connection;
+    private Statement st;
+    private ResultSet set;
 
     public static void main(String[] args) {
         try{
@@ -123,7 +123,7 @@ public class Login extends JDialog implements ActionListener {
 
         JLabel logo = new JLabel("");
         logo.setHorizontalAlignment(SwingConstants.LEFT);
-        logo.setIcon(new ImageIcon(getClass().getResource("/resources/BankManager.png")));
+        logo.setIcon(new ImageIcon(getClass().getResource("BankManager.png")));
         logo.setBounds(0,0,290,299);
         panel.add(logo);
     }
