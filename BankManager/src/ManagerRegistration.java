@@ -115,6 +115,23 @@ public class ManagerRegistration extends JFrame implements ActionListener {
         return id;
     }
 
+    public static void PopUp() {
+        try{
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }catch (Exception e){
+            // TODO: handle excception
+        }
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try{
+                    ManagerRegistration frame = new ManagerRegistration();
+                    frame.setVisible(true);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     public static void main(String[] args) {
         try{
