@@ -1,5 +1,3 @@
-import com.sun.source.tree.TryTree;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -125,7 +123,7 @@ public class Login extends JDialog implements ActionListener {
 
         JLabel logo = new JLabel("");
         logo.setHorizontalAlignment(SwingConstants.LEFT);
-        logo.setIcon(new ImageIcon("BankManager.png"));
+        logo.setIcon(new ImageIcon(getClass().getResource("/resources/BankManager.png")));
         logo.setBounds(0,0,290,299);
         panel.add(logo);
     }
