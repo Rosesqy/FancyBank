@@ -13,10 +13,10 @@ public class Login extends JDialog implements ActionListener {
     private final JPanel contentPane;
     private JTextField usernameField;
     private JPasswordField passwordField;
+    private JButton loginButton;
+    private JButton registerButton;
     private DbHelperPSQL dbcon;
-    Connection connection;
-    Statement st;
-    ResultSet set;
+    private Connection connection;
 
     public static void main(String[] args) {
         try{
@@ -40,7 +40,7 @@ public class Login extends JDialog implements ActionListener {
         dbcon = new DbHelperPSQL();
         connection = dbcon.getCon();
         setUndecorated(true);
-        setBounds(500,400,700,300);
+        setBounds(500,500,700,300);
 
         contentPane = new JPanel();
         setContentPane(contentPane);
@@ -57,7 +57,7 @@ public class Login extends JDialog implements ActionListener {
         panel_1.setBorder(new LineBorder(Color.WHITE));
         panel_1.setOpaque(false);
         panel_1.setBackground(Color.WHITE);
-        panel_1.setBounds(320,50 ,350,200);
+        panel_1.setBounds(320,40 ,350,200);
         panel.add(panel_1);
         panel_1.setLayout(null);
 
@@ -91,20 +91,41 @@ public class Login extends JDialog implements ActionListener {
         usernameField.setForeground(new Color(112,128,144));
         usernameField.setColumns(10);
 
-
-        JButton loginButton = new JButton("Login");
+        // Buttons
+        loginButton = new JButton("Login");
         loginButton.setBorder(new LineBorder(new Color(245,245,245)));
         loginButton.setForeground(Color.WHITE);
-        loginButton.setBounds(50,140, 100,25);
+        loginButton.setBounds(30,140, 100,25);
         panel_1.add(loginButton);
         loginButton.addActionListener(this);
         loginButton.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel closeLabel = new JLabel("Close");
+        registerButton = new JButton("Register New Account");
+        registerButton.setBorder(new LineBorder(new Color(245,245,245)));
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setBounds(150,140,150,25);
+        panel_1.add(registerButton);
+        registerButton.addActionListener(this);
+        registerButton.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel logo = new JLabel("");
+        logo.setHorizontalAlignment(SwingConstants.LEFT);
+        logo.setIcon(new ImageIcon(getClass().getResource("BankManager.png")));
+        logo.setBounds(0,0,300,300);
+        panel.add(logo);
+
+        JLabel bmpLabel = new JLabel("Bank Manager Platform");
+        bmpLabel.setForeground(Color.WHITE);
+        bmpLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        bmpLabel.setBounds(395,10,200,30);
+        panel.add(bmpLabel);
+
+
+        JLabel closeLabel = new JLabel("Exit");
         closeLabel.setBorder(new LineBorder(new Color(245,245,245)));
         closeLabel.setForeground(Color.WHITE);
-        closeLabel.setBounds(200,140,100,25);
-        panel_1.add(closeLabel);
+        closeLabel.setBounds(320,250,350,25);
+        panel.add(closeLabel);
         closeLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         closeLabel.addMouseListener(new MouseAdapter() {
             @Override
@@ -114,33 +135,45 @@ public class Login extends JDialog implements ActionListener {
         });
         closeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-
-        JLabel bmpLabel = new JLabel("Bank Manager Platform");
-        bmpLabel.setForeground(Color.WHITE);
-        bmpLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        bmpLabel.setBounds(395,20,200,30);
-        panel.add(bmpLabel);
-
-        JLabel logo = new JLabel("");
-        logo.setHorizontalAlignment(SwingConstants.LEFT);
-        logo.setIcon(new ImageIcon(getClass().getResource("/resources/BankManager.png")));
-        logo.setBounds(0,0,290,299);
-        panel.add(logo);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try{
-            String query = "select * from bank_managers where userid ='"+usernameField.getText()+"' and password = '"+passwordField.getText()+"'";
-            st = connection.createStatement();
-            set = st.executeQuery(query);
-            if (set.next()){
+        if (e.getSource()== loginButton){
+            if (authenticateUser(usernameField.getText(),passwordField.getText())){
                 JOptionPane.showMessageDialog(this, "Login succesful");
             }
             else{
                 JOptionPane.showMessageDialog(this, "LoginFailed");
             }
-        }catch (Exception o){
         }
+        else if (e.getSource()== registerButton){
+            try{
+                ManagerRegistration reg = new ManagerRegistration();
+                reg.PopUp();
+//                wait();
+//                dispatchEvent()
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private boolean authenticateUser(String username, String password){
+        String query = "select * from bank_managers where userid=?";
+        try{
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1,username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()){
+                byte[] salt = rs.getBytes("salt");
+                byte[] encryptedPassword = rs.getBytes("password");
+                PasswordEncryptionService passwordEncryptionService = new PasswordEncryptionService();
+                return passwordEncryptionService.authenticate(password,encryptedPassword,salt);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return false;
     }
 }
