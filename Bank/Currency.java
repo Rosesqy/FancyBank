@@ -13,6 +13,11 @@ public class Currency {
 		rate = 1;
 		
 	}
+
+	public Currency(String type){
+		this.type = type;
+	}
+
 	public Currency(String type, double rate) {
 		this.type = type;
 		this.rate = rate;

@@ -5,10 +5,6 @@ import java.io.*;
 
 public class Manager extends Person {
 
-    public Manager(String name, String pwd){
-        super(name, pwd);
-    }
-
     public boolean approveTrans(Account ac1, Account ac2, int amt){
 
         return false;

@@ -2,14 +2,28 @@ package Bank;
 
 import java.util.Scanner;
 
-public class Savings extends Account implements Transaction {
+public class Savings extends Account implements iTransaction {
 	protected Loan loan; //If the customer owns a loan to the bank in this account
+
+	protected double interest;//may need a default value
+
 	//Constructor
-	public Savings(String customerID, String id) {
+	public Savings(String customerID, String id, double interest) {
 		super(customerID, id);
 		loan = new Loan();
+		this.interest = interest;
+		this.type = "SAVING";
 	}
 	//Getter and setter
+
+	public void setInterest(double interest){
+		this.interest = interest;
+	}
+
+	public double getInterest(){
+		return this.interest;
+	}
+
 	public Loan getLoan() {
 		return loan;
 	}
@@ -17,7 +31,7 @@ public class Savings extends Account implements Transaction {
 		this.loan = loan;
 	}
 	//Override
-	public <T extends Account> void Transaction(T account) {
+	public <T extends Account> void iTransaction(T account) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Choose currency:");
 		String type = sc.next();

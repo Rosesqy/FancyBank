@@ -2,7 +2,7 @@ package Bank;
 
 import java.util.Scanner;
 
-public class Checking extends Account implements Transaction {
+public class Checking extends Account implements iTransaction {
 	protected Loan loan; //If the customer owns a loan to the bank in this account
 	protected static double transactionFee;
 	protected static double withdrawalFee;
@@ -10,6 +10,7 @@ public class Checking extends Account implements Transaction {
 	public Checking(String customerID, String id) {
 		super(customerID, id);
 		loan = new Loan();
+		this.type = "CHECKING";
 	}
 	//Getter and setter
 	public Loan getLoan() {
@@ -31,7 +32,7 @@ public class Checking extends Account implements Transaction {
 		Checking.withdrawalFee = withdrawalFee;
 	}
 	//Override
-	public <T extends Account> void Transaction(T account) {
+	public <T extends Account> void iTransaction(T account) {
 		Scanner sc = new Scanner(System.in);
 		if(account instanceof Security) {
 			System.out.println("Cannot transfer from a checking account to a security account!");

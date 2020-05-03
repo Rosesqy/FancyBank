@@ -1,10 +1,26 @@
 package Bank;
 
-/*
- * Provide methods for customers to make transaction between different accounts
- */
+import java.util.*;
+import java.io.*;
 
-public interface Transaction {
-	//To let a customer transfer money to another account
-	public abstract <T extends Account> void Transaction(T account);
+public class Transaction{
+
+    static Scanner stdin = new Scanner(System.in);
+
+    private String fromId;
+    private String toId;
+    private Currency currency;
+    private double amt;
+
+    public Transaction(String from, String to, Currency cur, double amt){
+        this.fromId = from;
+        this.toId = to;
+        this.currency = cur;
+        this.amt = amt;
+    }
+
+	public void makeTrans(){
+		//TODO: interaction with database
+	}
+
 }
