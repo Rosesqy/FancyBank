@@ -8,8 +8,8 @@ public class Savings extends Account implements iTransaction {
 	protected double interest;//may need a default value
 
 	//Constructor
-	public Savings(String customerID, String id, double interest) {
-		super(customerID, id);
+	public Savings(String customerID, double interest) {
+		super(customerID);
 		loan = new Loan();
 		this.interest = interest;
 		this.type = "SAVING";

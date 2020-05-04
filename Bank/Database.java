@@ -9,9 +9,9 @@ public class Database {
    String psql;
 
    public Database() {
-      if (!test()) {
-         initialize();
-      }
+      // if (!test()) {
+      //    initialize();
+      // }
    }
 
    public boolean test() {
@@ -49,42 +49,42 @@ public class Database {
             + "PHONE_NUM TEXT NOT NULL," + "EMAIL TEXT NOT NULL,"+"PWD TEXT NOT NULL)";
       this.createTable("customer", psql);
 
-      psql = "CREATE TABLE SAVING_ACC " + "(SAVINGID BIGSERIAL PRIMARY KEY NOT NULL," + "CUSTOMERID BIGINT NOT NULL,"
-            + "BALANCE MONEY NOT NULL," +"CURRENCY VSRCHAR(5) NOT NULL,"
+      psql = "CREATE TABLE SAVING_ACC " + "(SAVINGID BIGSERIAL PRIMARY KEY NOT NULL," + "CUSTOMERID BIGINT REFERENCES CUSTOMER(ID) NOT NULL,"
+            + "BALANCE MONEY NOT NULL," +"CURRENCY VARCHAR(5) NOT NULL,"
             + "INTEREST_RATE NUMERIC(8,4) NOT NULL," + "CLOSEFEE MONEY NOT NULL,"
-            + "OPENFEE MONEY NONULL)";
+            + "OPENFEE MONEY NOT NULL," +"UNIQUE(CUSTOMERID))";
       this.createTable("saving_acc", psql);
 
       psql = "CREATE TABLE CHECKING_ACC " + "(CHECKINGID BIGSERIAL PRIMARY KEY NOT NULL,"
-            + "CUSTOMERID BIGINT NOT NULL," + "BALANCE MONEY NOT NULL," +"CURRENCY VSRCHAR(5) NOT NULL,"
-            + "CLOSEFEE MONEY NOT NULL," + "OPENFEE MONEY NONULL)";
+            + "CUSTOMERID BIGINT REFERENCES CUSTOMER(ID) NOT NULL," + "BALANCE MONEY NOT NULL," +"CURRENCY VARCHAR(5) NOT NULL,"
+            + "CLOSEFEE MONEY NOT NULL," + "OPENFEE MONEY NOT NULL," +"UNIQUE(CUSTOMERID))";
       this.createTable("checking_acc", psql);
 
-      psql = "CREATE TABLE SEC_ACC " + "(SECID BIGSERIAL PRIMARY KEY NOT NULL," + "CUSTOMERID BIGINT NOT NULL,"
-            + "BALANCE MONEY NOT NULL," + "CURRENCY VSRCHAR(5) NOT NULL,"
-            +"CLOSEFEE MONEY NOT NULL," + "OPENFEE MONEY NONULL)";
+      psql = "CREATE TABLE SEC_ACC " + "(SECID BIGSERIAL PRIMARY KEY NOT NULL," + "CUSTOMERID BIGINT REFERENCES CUSTOMER(ID) NOT NULL,"
+            + "BALANCE MONEY NOT NULL," + "CURRENCY VARCHAR(5) NOT NULL,"
+            +"CLOSEFEE MONEY NOT NULL," + "OPENFEE MONEY NOT NULL," +"UNIQUE(CUSTOMERID))";
       this.createTable("sec_acc", psql);
 
       psql = "CREATE TABLE TRANSACTION " + "(TRANSID BIGSERIAL PRIMARY KEY NOT NULL," + "FROMNAME TEXT NOT NULL,"
-            + "FROMID BIGINT NOT NULL," + "TONAME TEXT NOTNULL," + "TOID BIGINT NOT NULL," + "AMT MONEY NOT NULL,"
+            + "FROMID BIGINT NOT NULL," + "TONAME TEXT NOT NULL," + "TOID BIGINT NOT NULL," + "AMT MONEY NOT NULL,"
             + "CURRENCY VARCHAR(5) NOT NULL," + "TIME TIMESTAMP NOT NULL)";
       this.createTable("transaction", psql);
 
       psql = "CREATE TABLE LOAN " + "(LOANID BIGSERIAL PRIMARY KEY NOT NULL," + "CUSTOMERNAME TEXT NOT NULL,"
             + "CUSTOMERID BIGINT NOT NULL," + "AMT MONEY NOT NULL," + "COLLATERAL TEXT NOT NULL,"
-            + "COLLATERAL_VALUE MONEY NOT NULL" + "INTEREST_RATE NUMERIC(8,4) NOT NULL," + "TIME TIMESTAMP NOT NULL)";
+            + "COLLATERAL_VALUE MONEY NOT NULL," + "INTEREST_RATE NUMERIC(8,4) NOT NULL," + "TIME TIMESTAMP NOT NULL)";
       this.createTable("loan", psql);
 
       psql = "CREATE TABLE STOCKMKT " + "(STOCKID BIGSERIAL PRIMARY KEY NOT NULL," + "STOCKNAME TEXT NOT NULL,"
             + "QUANTITY BIGINT NOT NULL," + "PRICE MONEY NOT NULL)";
       this.createTable("stockmkt", psql);
 
-      psql = "CREATE TABLE MYSTOCK " + "(STOCKID BIGSERIAL PRIMARY KEY NOT NULL," + "STOCKNAME TEXT NOT NULL"
+      psql = "CREATE TABLE MYSTOCK " + "(STOCKID BIGSERIAL PRIMARY KEY NOT NULL," + "STOCKNAME TEXT NOT NULL,"
             + "CUSTOMERNAME TEXT NOT NULL," + "CUSTOMERSECID BIGINT NOT NULL," + "PURCHASE_PRICE MONEY NOT NULL,"
             + "PURCHASE_QUANTITY BIGINT NOT NULL," + "CURRENT_PRICE MONEY NOT NULL)";
       this.createTable("mystock", psql);
 
-      psql = "CREATE TABLE STOCKTRANS " + "(STRANSID BIGSERIAL PRIMARY KEY," + "STOCKNAME TEXT NOT NULL"
+      psql = "CREATE TABLE STOCKTRANS " + "(STRANSID BIGSERIAL PRIMARY KEY," + "STOCKNAME TEXT NOT NULL,"
             + "CUSTOMERNAME TEXT NOT NULL," + "CUSTOMERSECID BIGINT NOT NULL," + "PRICE MONEY NOT NULL,"
             + "QUANTITY BIGINT NOT NULL," + "TIME TIMESTAMP NOT NULL)";
       this.createTable("stock_transaction", psql);
@@ -111,7 +111,7 @@ public class Database {
    public boolean insertCustomer(Customer customer) {
       Connection c = this.getConnection();
       String psql = "INSERT INTO CUSTOMER(USERNAME, FIRST_NAME, MIDDLE_NAME,LAST_NAME, PHONE_NUM, EMAIL, PWD)"
-            + "VALUE(?,?,?,?,?,?,?)";
+            + "VALUES(?,?,?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, customer.getUname());
@@ -121,7 +121,7 @@ public class Database {
          pstmt.setString(5, customer.getPhone());
          pstmt.setString(6, customer.getEmail());
          pstmt.setString(7, customer.getPwd());
-         pstmt.executeUpdate(psql);
+         pstmt.executeUpdate();
          try (ResultSet rs = pstmt.getGeneratedKeys()) {
             if (rs.next()) {
                System.out.println(rs.getLong(1) + "customer created");
@@ -142,7 +142,7 @@ public class Database {
    public boolean insertSavAccount(Savings savacc) {
       Connection c = this.getConnection();
       String psql = "INSERT INTO SAVING_ACC(CUSTOMERID, BALANCE, CURRENCY, INTERESTRATE,OPENFEE, CLOSEFEE)"
-            + "VALUE(?,?,?,?,?,?)";
+            + "VALUES(?,?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, savacc.getCustomerID());
@@ -151,7 +151,7 @@ public class Database {
          pstmt.setDouble(4, savacc.getInterest());
          pstmt.setDouble(5, savacc.getOpenFee());
          pstmt.setDouble(6, savacc.getCloseFee());
-         pstmt.executeUpdate(psql);
+         pstmt.executeUpdate();
          try (ResultSet rs = pstmt.getGeneratedKeys()) {
             if (rs.next()) {
                System.out.println(rs.getLong(1) + "saving account created");
@@ -172,7 +172,7 @@ public class Database {
    public boolean insertCheckAccount(Checking checkacc) {
       Connection c = this.getConnection();
       String psql = "INSERT INTO CECKING_ACC(CUSTOMERID, BALANCE, CURRENCY, OPENFEE, CLOSEFEE)"
-            + "VALUE(?,?,?,?,?)";
+            + "VALUES(?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, checkacc.getCustomerID());
@@ -180,7 +180,7 @@ public class Database {
          pstmt.setString(3, checkacc.getCurSig());
          pstmt.setDouble(4, checkacc.getOpenFee());
          pstmt.setDouble(5, checkacc.getCloseFee());
-         pstmt.executeUpdate(psql);
+         pstmt.executeUpdate();
          try (ResultSet rs = pstmt.getGeneratedKeys()) {
             if (rs.next()) {
                System.out.println(rs.getLong(1) + "checking account created");
@@ -201,7 +201,7 @@ public class Database {
    public boolean insertSecAccount(Security secacc) {
       Connection c = this.getConnection();
       String psql = "INSERT INTO SEC_ACC(CUSTOMERID, BALANCE, CURRENCY,OPENFEE, CLOSEFEE)"
-            + "VALUE(?,?,?,?,?,?)";
+            + "VALUES(?,?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, secacc.getCustomerID());
@@ -209,7 +209,7 @@ public class Database {
          pstmt.setString(3, secacc.getCurSig());
          pstmt.setDouble(4, secacc.getOpenFee());
          pstmt.setDouble(5, secacc.getCloseFee());
-         pstmt.executeUpdate(psql);
+         pstmt.executeUpdate();
          try (ResultSet rs = pstmt.getGeneratedKeys()) {
             if (rs.next()) {
                System.out.println(rs.getLong(1) + "saving account created");
@@ -226,8 +226,6 @@ public class Database {
       }
       return false;
    }
-
-
 
    public boolean dropCustomer(Customer customer) {
       Connection c = this.getConnection();
@@ -272,10 +270,36 @@ public class Database {
       return true;
    }
 
+   public String getCusInfo(Customer customer){
+      Connection c = this.getConnection();
+      Statement stmt;
+      String info = "";
+      try{
+         // String psql = String.format("SELECT * FROM CUSTOMER WHERE PHONE_NUM = '%s'",customer.getPhone());
+         String psql = "SELECT * FROM PUBLIC.CUSTOMER";
+         stmt = c.createStatement();
+         ResultSet rs = stmt.executeQuery(psql);
+         while(rs.next()){
+            System.out.println(rs.getString(1));
+            info = rs.getString(2);
+            System.out.println(info);
+         }
+         rs.close();
+         stmt.close();
+         c.close();
+      }catch(SQLException e){
+         e.printStackTrace();
+      }
+	   return info;
+   }
+
 
    public static void main(String args[]) throws SQLException {
       Database dtbase = new Database();
       // dtbase.test();
+      Customer c = new Customer("try","test","test","test","123456","1@2","0000");
+      dtbase.insertCustomer(c);
+      System.out.println("we have "+dtbase.getCusInfo(c));
 
    }
 }  

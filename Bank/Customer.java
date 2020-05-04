@@ -11,9 +11,10 @@ public class Customer extends Person{
     // private ArrayList<Account> knownAccountList;
     // private Currency currency;
     
-    private int deposit;
-    private int loan;
+    private double deposit;
+    private double loan;
     private String userName;
+    private long id;
 
     private Transaction trans;
 
@@ -22,24 +23,9 @@ public class Customer extends Person{
         this.userName = uname;
         this.myCheckList = new ArrayList<Checking> ();
         this.mySaveList = new ArrayList<Savings>();
+        // this.id = id;
         // this.knownAccountList = new ArrayList<Account>();
     }
-
-    // public void setCur(String cur){
-    //     switch(cur){
-    //         //or enter string and get sign?
-    //         case("$"):
-    //             this.currency = new Currency();
-    //         case("€"):
-    //             this.currency = new Currency("EUR");
-    //         case("¥"):
-    //             this.currency = new Currency("RMB");
-    //         case("￥"):
-    //             this.currency = new Currency("YEN");
-    //     }
-    // }
-
-
 
     public void makeSaveTransaction(){
         System.out.println("from which account do you want to make the trans");
@@ -78,16 +64,24 @@ public class Customer extends Person{
         this.userName = uname;
     }
 
+    public void setId(long id){
+        this.id = id;
+    }
+
     public String getUname(){
         return this.userName;
     }
 
-    public int getTotal(){
+    public double getTotal(){
         return this.deposit;
     }
 
-    public int getLoan(){
+    public double getLoan(){
         return this.loan;
+    }
+
+    public long getID(){
+        return this.id;
     }
 
 

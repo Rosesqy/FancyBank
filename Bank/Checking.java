@@ -7,8 +7,8 @@ public class Checking extends Account implements iTransaction {
 	protected static double transactionFee;
 	protected static double withdrawalFee;
 	//Constructor
-	public Checking(String customerID, String id) {
-		super(customerID, id);
+	public Checking(String customerID) {
+		super(customerID);
 		loan = new Loan();
 		this.type = "CHECKING";
 	}

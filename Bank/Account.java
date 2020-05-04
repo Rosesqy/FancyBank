@@ -19,9 +19,9 @@ public abstract class Account {
 	protected static double openFee;
 	protected static double closeFee;
 	//Constructor
-	public Account(String customerID, String id) {
+	public Account(String customerID) {
 		this.customerID = customerID;
-		this.id = id;
+		// this.id = id;
 		deposits = new ArrayList<Deposit>();
 
 		this.type = "default";
