@@ -1,5 +1,7 @@
 package Bank.BankManagerPlatform;
 
+
+
 import Bank.DAO.BankManagerAccount;
 import Bank.Utilities.DbConnectionHelper;
 
@@ -23,56 +25,59 @@ public class ManagerRegistration extends JFrame implements ActionListener {
         dbcon = new DbConnectionHelper();
         connection = dbcon.getConnection();
 
-        setBounds(320,50 ,350,200);
+        setBounds(900,400 ,812,400);
         setUndecorated(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         contentPane = new JPanel();
         setContentPane(contentPane);
-        contentPane.setBackground(new Color(105,105,105));
+        contentPane.setBackground(new Color(130,130,130));
         contentPane.setLayout(null);
 
 
-        JLabel bmrpLabel = new JLabel("Bank Manager Registration Platform");
-        bmrpLabel.setBounds(0,0,400,25);
+        JLabel bmrpLabel = new JLabel("Register New Bank Manager");
+        bmrpLabel.setBounds(100,38,700,42);
         bmrpLabel.setForeground(Color.WHITE);
-        contentPane.add(bmrpLabel);
+        bmrpLabel.setFont(new Font("Roboto", Font.PLAIN,36));
         bmrpLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        contentPane.add(bmrpLabel);
 
         // username
         JLabel usernameLabel = new JLabel("Username");
-        usernameLabel.setBounds(10,40,100,25);
+        usernameLabel.setBounds(51,117,109,28);
         usernameLabel.setForeground(Color.WHITE);
+        usernameLabel.setFont(new Font("Roboto", Font.PLAIN,20));
+        usernameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         contentPane.add(usernameLabel);
-        usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
         usernameField = new JTextField();
         usernameField.setBackground(new Color(245,245,245));
-        usernameField.setBounds(100,40,200,25);
+        usernameField.setBounds(210,100,552,43);
+        usernameField.setFont(new Font("Roboto", Font.PLAIN,20));
         contentPane.add(usernameField);
         usernameField.setHorizontalAlignment(SwingConstants.LEFT);
-        usernameField.setForeground(new Color(112,128,144));
         usernameField.setColumns(10);
 
         // password
         JLabel passwordLabel = new JLabel("Password");
-        passwordLabel.setBounds(10,90,100,25);
+        passwordLabel.setBounds(50,224,106,28);
         passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setFont(new Font("Roboto", Font.PLAIN,20));
         contentPane.add(passwordLabel);
-        usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        usernameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         passwordField = new JPasswordField();
         passwordField.setBackground(new Color(245,245,245));
-        passwordField.setBounds(100,90,200,25);
+        passwordField.setBounds(209,209,552,43);
         contentPane.add(passwordField);
         usernameField.setHorizontalAlignment(SwingConstants.LEFT);
-        usernameField.setForeground(new Color(112,128,144));
         usernameField.setColumns(10);
 
         JButton registerButton = new JButton("Register Bank Manager");
         registerButton.setBorder(new LineBorder(new Color(245,245,245)));
+        registerButton.setFont(new Font("Roboto", Font.PLAIN,20));
         registerButton.setForeground(Color.WHITE);
-        registerButton.setBounds(40,140, 250,25);
+        registerButton.setBounds(278,292, 256,59);
         contentPane.add(registerButton);
         registerButton.addActionListener(this);
         registerButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -86,6 +91,7 @@ public class ManagerRegistration extends JFrame implements ActionListener {
         System.out.println(insertkey);
         if (insertkey>0){
             JOptionPane.showMessageDialog(this, "Registration successful");
+            dispose();
         }
         else{
             JOptionPane.showMessageDialog(this, "Registration failed");
@@ -118,41 +124,5 @@ public class ManagerRegistration extends JFrame implements ActionListener {
             ex.printStackTrace();
         }
         return id;
-    }
-
-    public static void PopUp() {
-        try{
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch (Exception e){
-            // TODO: handle excception
-        }
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try{
-                    ManagerRegistration frame = new ManagerRegistration();
-                    frame.setVisible(true);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public static void main(String[] args) {
-        try{
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch (Exception e){
-            // TODO: handle excception
-        }
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try{
-                    ManagerRegistration frame = new ManagerRegistration();
-                    frame.setVisible(true);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 }
