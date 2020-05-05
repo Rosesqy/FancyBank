@@ -285,19 +285,19 @@ public class Database {
    }
 
 
-   public static void main(String args[]) throws SQLException {
-      String url = "jdbc:postgresql://localhost:5432/FancyBank";
-      String username = "postgres";
-      String pwd = "123456";
-      Database dtbase = new Database(url,username,pwd);
-      // dtbase.test();
-      Customer c = new Customer("try2","test","test","test","123456","1@2","0000");
-      dtbase.insertCustomer(c);
+   // public static void main(String args[]) throws SQLException {
+   //    String url = "jdbc:postgresql://localhost:5432/FancyBank";
+   //    String username = "postgres";
+   //    String pwd = "123456";
+   //    Database dtbase = new Database(url,username,pwd);
+   //    // dtbase.test();
+   //    Customer c = new Customer("try2","test","test","test","123456","1@2","0000");
+   //    dtbase.insertCustomer(c);
       
-      System.out.println("we have "+dtbase.getCusInfo(c));
-      // Account a = 
-      dtbase.dropCustomer(c);
+   //    System.out.println("we have "+dtbase.getCusInfo(c));
+   //    // Account a = 
+   //    dtbase.dropCustomer(c);
 
 
-   }
+   // }
 }  
