@@ -1,4 +1,4 @@
-package Bank;
+package DAO;
 
 /*
  * Provide methods for customers to make transaction between different accounts

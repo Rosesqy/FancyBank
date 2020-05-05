@@ -1,7 +1,7 @@
 package Bank;
 import java.sql.*;
 
-public class Database {
+public class DbHelperPSQL {
    // static String url = "jdbc:postgresql://localhost:5432/FancyBank";
    // static String username = "postgres";
    // static String pwd = "123456";
@@ -11,7 +11,13 @@ public class Database {
    Connection c;
    String psql;
 
-   public Database(String url, String username, String pwd) {
+   public DbHelperPSQL(){
+      this.url = "jdbc:postgresql://localhost:5432/FancyBank";
+      this.username = "postgres";
+      this.pwd = null;
+   }
+
+   public DbHelperPSQL(String url, String username, String pwd) {
       this.url = url;
       this.username = username;
       this.pwd = pwd;
@@ -290,8 +296,8 @@ public class Database {
    public static void main(String args[]) throws SQLException {
       String url = "jdbc:postgresql://localhost:5432/FancyBank";
       String username = "postgres";
-      String pwd = "123456";
-      Database dtbase = new Database(url,username,pwd);
+      String pwd = null;
+      DbHelperPSQL dtbase = new DbHelperPSQL(url,username,pwd);
       Customer c = new Customer("try2","test","test","test","123456","1@2","0000");
       dtbase.insertCustomer(c);
       
