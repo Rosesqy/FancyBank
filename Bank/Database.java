@@ -292,7 +292,6 @@ public class Database {
       String username = "postgres";
       String pwd = "123456";
       Database dtbase = new Database(url,username,pwd);
-      // dtbase.test();
       Customer c = new Customer("try2","test","test","test","123456","1@2","0000");
       dtbase.insertCustomer(c);
       
