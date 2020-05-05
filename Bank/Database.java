@@ -154,7 +154,7 @@ public class Database {
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, savacc.getCustomerID());
-         pstmt.setDouble(2, savacc.getDepositVal());
+         pstmt.setDouble(2, savacc.getBalance());
          pstmt.setString(3, savacc.getCurSig());
          pstmt.setDouble(4, savacc.getInterest());
          pstmt.setDouble(5, savacc.getOpenFee());
@@ -178,7 +178,7 @@ public class Database {
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, checkacc.getCustomerID());
-         pstmt.setDouble(2, checkacc.getDepositVal());
+         pstmt.setDouble(2, checkacc.getBalance());
          pstmt.setString(3, checkacc.getCurSig());
          pstmt.setDouble(4, checkacc.getOpenFee());
          pstmt.setDouble(5, checkacc.getCloseFee());
@@ -201,7 +201,7 @@ public class Database {
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, secacc.getCustomerID());
-         pstmt.setDouble(2, secacc.getDepositVal());
+         pstmt.setDouble(2, secacc.getBalance());
          pstmt.setString(3, secacc.getCurSig());
          pstmt.setDouble(4, secacc.getOpenFee());
          pstmt.setDouble(5, secacc.getCloseFee());

@@ -10,9 +10,10 @@ import java.util.List;
 public abstract class Account {
 	protected String customerID;
 	protected String id; //Every bank account has an id to specify it
-	protected List<Deposit> deposits; //Allow customers to manage deposits in at least three different currencies
+	protected Date openDate;
+	protected Date closeDate;
 
-	protected Deposit deposit;
+	protected double balance;
 	protected Currency currency;
 	protected String type;
 
@@ -22,24 +23,44 @@ public abstract class Account {
 	public Account(String customerID) {
 		this.customerID = customerID;
 		// this.id = id;
-		deposits = new ArrayList<Deposit>();
 
 		this.type = "default";
+		// this.openDate = openDate;
 	}
 	//Getter and setter
 
-	public void setCur(String cur){
-        switch(cur){
-            //or enter string and get sign?
-            case("$"):
-                this.currency = new Currency();
-            case("€"):
-                this.currency = new Currency("EUR");
-            case("¥"):
-                this.currency = new Currency("RMB");
-            case("￥"):
-                this.currency = new Currency("YEN");
-        }
+	// public void setCur(String cur){
+    //     switch(cur){
+    //         //or enter string and get sign?
+    //         case("$"):
+    //             this.currency = new Currency();
+    //         case("€"):
+    //             this.currency = new Currency("EUR");
+    //         case("¥"):
+    //             this.currency = new Currency("RMB");
+    //         case("￥"):
+    //             this.currency = new Currency("YEN");
+    //     }
+	// }
+
+	public void setCurrency(int i) {
+		switch(i) {
+		case 1:
+			this.currency = new Currency("$", 1);
+			break;
+		case 2:
+			this.currency = new Currency("€", 1.1);
+			break;
+		case 3:
+			this.currency = new Currency("￥", 0.01);
+			break;
+		case 4:
+			this.currency = new Currency("￡", 1.25);
+			break;
+		case 5:
+			this.currency = new Currency("€", 0.15);
+		default: break;
+		}
 	}
 
 	public Currency getCurrency(){
@@ -70,22 +91,29 @@ public abstract class Account {
 	public void setID(String id) {
 		this.id = id;
 	}
-	public Deposit getDeposit(int i) {
-		return deposits.get(i);
-	}
-	public void addDeposit(Deposit deposit) {
-		deposits.add(deposit);
-	}
-	public void removeDeposit(int i) {
-		deposits.remove(i);
-	}
-	public List<Deposit> getDeposits() {
-		return deposits;
-	}
 
-	public double getDepositVal(){
-		//return deposit object or just the value?
-		return this.deposit.getBalance();
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+	public void changeBalance(double balance) {
+		this.balance += balance;
+	}
+	public Date getOpenDate() {
+		return openDate;
+	}
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
+	}
+	public Date getCloseDate() {
+		return closeDate;
+	}
+	public void setCloseDate(Date closeDate) {
+		this.closeDate = closeDate;
+	}
+	
+
+	public double getBalance(){
+		return this.balance;
 	}
 
 	public double getOpenFee() {
