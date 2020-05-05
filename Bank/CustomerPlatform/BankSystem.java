@@ -1,4 +1,4 @@
-package Bank.Customer;
+package Bank.CustomerPlatform;
 
 import java.util.List;
 

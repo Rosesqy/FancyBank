@@ -27,7 +27,7 @@ public class DbConnectionHelper {
             String dbType = "jdbc:postgresql:";
             String dbUrl = "//localhost:";
             String dbPort = "5432/";
-            String dbName = "FancyBank";
+            String dbName = "fancybank";
             String dbUser = "postgres";
             String dbPass = null;
             // Establishing connection

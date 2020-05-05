@@ -1,4 +1,4 @@
-package Bank.Graphic;
+package Bank.CustomerPlatform;
 
 public class FancyBank {
 

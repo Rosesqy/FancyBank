@@ -15,7 +15,7 @@ public class DbHelperPSQL {
    String psql;
 
    public DbHelperPSQL(){
-      this.url = "jdbc:postgresql://localhost:5432/FancyBank";
+      this.url = "jdbc:postgresql://localhost:5432/fancybank";
       this.username = "postgres";
       this.pwd = null;
    }

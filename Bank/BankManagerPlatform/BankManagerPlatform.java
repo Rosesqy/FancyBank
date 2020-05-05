@@ -1,4 +1,4 @@
-package Bank.BankManagerPlatform;;
+package Bank.BankManagerPlatform;
 
 import Bank.Utilities.DbConnectionHelper;
 import Bank.Utilities.PasswordEncryptionService;
