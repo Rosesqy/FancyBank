@@ -2,13 +2,20 @@ package Bank;
 import java.sql.*;
 
 public class Database {
-   static String url = "jdbc:postgresql://localhost:5432/FancyBank";
-   static String username = "postgres";
-   static String pwd = "123456";
+   // static String url = "jdbc:postgresql://localhost:5432/FancyBank";
+   // static String username = "postgres";
+   // static String pwd = "123456";
+   String url;
+   String username;
+   String pwd;
    Connection c;
    String psql;
 
-   public Database() {
+   public Database(String url, String username, String pwd) {
+      this.url = url;
+      this.username = username;
+      this.pwd = pwd;
+      
       if (!test()) {
          initialize();
       }
@@ -26,7 +33,7 @@ public class Database {
          // stmt.execute("DROP SCHEMA PUBLIC CASCADE");
          // stmt.execute("CREATE SCHEMA PUBLIC");
          // System.out.println("schema restarted");
-         System.out.println(rs.next());
+         // System.out.println("rs.next() "+rs.next());
          return rs.next();
       } catch (SQLException e) {
          e.printStackTrace();
@@ -38,7 +45,7 @@ public class Database {
       Connection c = null;
       try {
          Class.forName("org.postgresql.Driver");
-         c = DriverManager.getConnection(url, username, pwd);
+         c = DriverManager.getConnection(this.url, this.username, this.pwd);
          c.setAutoCommit(false);
       } catch (Exception e) {
          e.printStackTrace();
@@ -259,7 +266,7 @@ public class Database {
       Statement stmt;
       String info = "";
       try{
-         String psql = String.format("SELECT * FROM CUSTOMER WHERE PHONE_NUM = '%s'",customer.getPhone());
+         String psql = String.format("SELECT * FROM CUSTOMER WHERE USERNAME = '%s'",customer.getUname());
          
          stmt = c.createStatement();
          ResultSet rs = stmt.executeQuery(psql);
@@ -279,13 +286,18 @@ public class Database {
 
 
    public static void main(String args[]) throws SQLException {
-      Database dtbase = new Database();
+      String url = "jdbc:postgresql://localhost:5432/FancyBank";
+      String username = "postgres";
+      String pwd = "123456";
+      Database dtbase = new Database(url,username,pwd);
       // dtbase.test();
-      Customer c = new Customer("try","test","test","test","123456","1@2","0000");
+      Customer c = new Customer("try2","test","test","test","123456","1@2","0000");
       dtbase.insertCustomer(c);
       
       System.out.println("we have "+dtbase.getCusInfo(c));
+      // Account a = 
       dtbase.dropCustomer(c);
+
 
    }
 }  
