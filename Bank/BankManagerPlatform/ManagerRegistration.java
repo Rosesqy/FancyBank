@@ -1,7 +1,7 @@
-package BankManagerPlatform;
+package Bank.BankManagerPlatform;
 
-import DAO.BankManagerAccount;
-import Utilities.DbConnectionHelper;
+import Bank.DAO.BankManagerAccount;
+import Bank.Utilities.DbConnectionHelper;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

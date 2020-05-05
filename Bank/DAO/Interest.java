@@ -1,4 +1,4 @@
-package DAO;
+package Bank.DAO;
 
 /*
  * To pay or charge interest on deposit or loan

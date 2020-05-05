@@ -1,4 +1,4 @@
-package Bank;
+package Bank.DAO;
 
 public class Date {
 	protected int year;

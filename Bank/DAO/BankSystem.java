@@ -1,4 +1,4 @@
-package Customer;
+package Bank.DAO;
 
 import java.util.List;
 

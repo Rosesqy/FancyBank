@@ -1,6 +1,6 @@
-package DAO;
+package Bank.DAO;
 
-import DAO.Account;
+// import DAO.Account;
 
 public class Security extends Account {
 	//Constructor

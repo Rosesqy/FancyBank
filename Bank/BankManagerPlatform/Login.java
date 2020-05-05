@@ -1,7 +1,7 @@
-package BankManagerPlatform;
+package Bank.BankManagerPlatform;
 
-import Utilities.DbConnectionHelper;
-import Utilities.PasswordEncryptionService;
+import Bank.Utilities.DbConnectionHelper;
+import Bank.Utilities.PasswordEncryptionService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

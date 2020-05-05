@@ -1,6 +1,6 @@
-package DAO;
+package Bank.DAO;
 
-import Utilities.PasswordEncryptionService;
+import Bank.Utilities.PasswordEncryptionService;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;

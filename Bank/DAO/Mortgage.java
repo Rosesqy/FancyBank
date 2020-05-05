@@ -1,4 +1,4 @@
-package DAO;
+package Bank.DAO;
 
 /*
  * Something to mortgage to the bank when applying for a loan

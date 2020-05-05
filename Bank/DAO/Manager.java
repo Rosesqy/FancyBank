@@ -1,7 +1,7 @@
-package DAO;
+package Bank.DAO;
 
-import DAO.Account;
-import DAO.Person;
+// import Account;
+// import DAO.Person;
 
 public class Manager extends Person {
 

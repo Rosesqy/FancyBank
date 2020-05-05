@@ -1,4 +1,4 @@
-package DAO;
+package Bank.DAO;
 
 /*
  * Allow customers to have a loan

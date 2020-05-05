@@ -1,1 +1,0 @@
-All GUI and functionality regarding Bank Manager

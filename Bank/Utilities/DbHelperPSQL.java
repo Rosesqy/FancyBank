@@ -1,4 +1,4 @@
-package Bank;
+package Bank.Utilities;
 import java.sql.*;
 
 public class DbHelperPSQL {

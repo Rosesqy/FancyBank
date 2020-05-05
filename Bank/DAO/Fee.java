@@ -1,4 +1,4 @@
-package DAO;
+package Bank.DAO;
 
 /*
  * To provide methods to charge fees on different actions
