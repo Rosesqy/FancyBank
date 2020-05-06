@@ -287,7 +287,7 @@ public class DbHelperPSQL {
       return false;
    }
 
-   public boolean updateInfo(Person person){
+   public boolean updateAccount(){
       return true;
    }
 
@@ -316,7 +316,7 @@ public class DbHelperPSQL {
 	   return info;
    }
 
-
+   
    public static void main(String args[]) throws SQLException {
       // String url = "jdbc:postgresql://localhost:5432/FancyBank";
       // String username = "postgres";
