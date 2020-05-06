@@ -226,18 +226,20 @@ public class DbHelperPSQL {
       return (result != 0);
    }
 
-   public boolean checkUser(String uname) {
+   public long checkUser(String uname) {
       Connection c = this.getConnection();
       String psql = String.format("SELECT * FROM CUSTOMER WHERE USERNAME = '%s'",uname) ;
       
       try {
          Statement stmt = c.createStatement();
          ResultSet rs = stmt.executeQuery(psql);
-         return rs.next();
+         while(rs.next()){
+            return rs.getLong("ID");
+         }
       } catch (Exception e) {
          e.printStackTrace();
       }
-      return false;
+      return 0;
    }
 
    public boolean checkPwd(String uname, String inpwd) {
@@ -296,10 +298,12 @@ public class DbHelperPSQL {
       // DbHelperPSQL dtbase = new DbHelperPSQL(url,username,pwd);
       DbHelperPSQL dtbase = new DbHelperPSQL();
       Customer c = new Customer("try2","test","test","test","123456","1@2","0000");
+      Customer d = new Customer("1017","test","test","test","123456","1@2","0000");
       // dtbase.insertCustomer("try2","test","test","test","123456","1@2","0000");
-      
+      dtbase.insertCustomer("1017","test","test","test","123456","1@2","0000");
       System.out.println("we have "+dtbase.getCusInfo(c));
       System.out.println(dtbase.checkUser("try"));
+      System.out.println(dtbase.checkUser("1017"));
       // System.out.println(dtbase.checkPwd(c.getUname(),"0000"));
       // dtbase.dropCustomer("try2");
 

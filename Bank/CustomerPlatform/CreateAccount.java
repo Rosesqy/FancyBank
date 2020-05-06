@@ -1,4 +1,4 @@
-package fancybank;
+package Bank.CustomerPlatform;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import Bank.Utilities.DbHelperPSQL;
+
 public class CreateAccount implements ActionListener {
+	DbHelperPSQL dtbase;
+
 	String username;
 	String userID;
 	JFrame frame;
