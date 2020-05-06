@@ -58,7 +58,7 @@ public abstract class Account {
 			this.currency = new Currency("￡", 1.25);
 			break;
 		case 5:
-			this.currency = new Currency("€", 0.15);
+			this.currency = new Currency("¥", 0.15);
 		default: break;
 		}
 	}
