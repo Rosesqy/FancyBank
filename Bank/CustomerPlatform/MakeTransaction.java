@@ -71,6 +71,7 @@ public class MakeTransaction implements ActionListener {
 		dayField.setBounds(350, 350, 100, 20);
 		transfer = new JButton("Transfer");
 		transfer.setBounds(150, 450, 200, 50);
+		transfer.addActionListener(this);
 		frame.add(from);
 		frame.add(to);
 		frame.add(amount);
