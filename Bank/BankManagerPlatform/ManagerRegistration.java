@@ -2,7 +2,7 @@ package Bank.BankManagerPlatform;
 
 
 
-import Bank.DAO.BankManagerAccount;
+import Bank.DAO.BankManager;
 import Bank.Utilities.DbConnectionHelper;
 
 import javax.swing.*;
@@ -86,7 +86,7 @@ public class ManagerRegistration extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        BankManagerAccount newBankManager = new BankManagerAccount(usernameField.getText(),passwordField.getText());
+        BankManager newBankManager = new BankManager(usernameField.getText(),passwordField.getText());
         long insertkey = insertBankManager(newBankManager);
         System.out.println(insertkey);
         if (insertkey>0){
@@ -98,15 +98,15 @@ public class ManagerRegistration extends JFrame implements ActionListener {
         }
     }
 
-    private long insertBankManager(BankManagerAccount newBankManager){
+    private long insertBankManager(BankManager newBankManager){
         String query = "insert into manager (username, salt, password) VALUES (?, ?, ?)";
         long id = 0;
         try{
             PreparedStatement pstmt = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 
-            pstmt.setString(1,newBankManager.getUserid());
-            pstmt.setBytes(2,newBankManager.getSalt());
-            pstmt.setBytes(3,newBankManager.getPassword());
+            pstmt.setString(1, newBankManager.getUserid());
+            pstmt.setBytes(2, newBankManager.getSalt());
+            pstmt.setBytes(3, newBankManager.getPassword());
 
             int affectedRows = pstmt.executeUpdate();
             // check the affected rows

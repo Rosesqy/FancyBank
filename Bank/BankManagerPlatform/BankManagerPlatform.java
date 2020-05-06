@@ -24,23 +24,6 @@ public class BankManagerPlatform extends JFrame implements ActionListener {
     private DbConnectionHelper dbcon;
     private Connection connection;
 
-    public static void main(String[] args) {
-        try{
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch (Exception e){
-        }
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try{
-                    BankManagerPlatform frame = new BankManagerPlatform();
-                    frame.setVisible(true);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     public BankManagerPlatform(){
         dbcon = new DbConnectionHelper();
         connection = dbcon.getConnection();
