@@ -49,6 +49,7 @@ public class ShowAccountInfo {
 		JTable SeAccounts = new JTable(seInfo, seAttributes);
 		JScrollPane csPane = new JScrollPane(CSAccounts);
 		JScrollPane sePane = new JScrollPane(SeAccounts);
+		frame1.add(csPane);
 		frame2.add(sePane);
 		frame1.setSize(500, 400);
 		frame2.setSize(500, 400);
