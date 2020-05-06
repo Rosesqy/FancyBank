@@ -43,4 +43,8 @@ public class Initiate implements ActionListener {
 		
 	}
 
+	public static void main(String args[]){
+		Initiate test = new Initiate();
+	}
+
 }

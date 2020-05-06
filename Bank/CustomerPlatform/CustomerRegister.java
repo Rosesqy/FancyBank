@@ -1,7 +1,11 @@
 package Bank.CustomerPlatform;
 
+import Bank.DAO.*;
+import Bank.Utilities.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import java.sql.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,8 +30,12 @@ public class CustomerRegister implements ActionListener {
 	JTextField phoneField;
 	JTextField emailField;
 	JButton register;
+
+	DbHelperPSQL dtbase;
 	
 	public CustomerRegister() {
+		dtbase = new DbHelperPSQL();
+
 		frame = new JFrame("Customer Register");
 		frame.setSize(500, 600);
 		username = new JLabel("Username");
@@ -84,22 +92,40 @@ public class CustomerRegister implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String username =  usernameField.getText();//Get input username
 		//Search the database to see if there is a same username
-		if() {
-			//If the username has not been occupied, create the customer account with input information.
-			String firstname = fnameField.getText();
-			String middlename = mnameField.getText();
-			String lastname = lnameField.getText();
-			String password = String.valueOf(passwordField.getPassword());
-			String phone = phoneField.getText();
-			String email = emailField.getText();
-			Customer customer = new Customer(username, firstname, middlename, lastname, password, phone, email);
-			//Add the customer to the database
+		// if() {
+		// 	//If the username has not been occupied, create the customer account with input information.
+		// 	String firstname = fnameField.getText();
+		// 	String middlename = mnameField.getText();
+		// 	String lastname = lnameField.getText();
+		// 	String password = String.valueOf(passwordField.getPassword());
+		// 	String phone = phoneField.getText();
+		// 	String email = emailField.getText();
+		// 	Customer customer = new Customer(username, firstname, middlename, lastname, password, phone, email);
+		// 	//Add the customer to the database
 			
+		// 	new ChooseAction(username);
+		// }
+		// else {
+		// 	JFrame f = new JFrame();
+		// 	JOptionPane.showMessageDialog(f, "This username has already been used!"); //Popup window
+		// }
+		
+		String firstname = fnameField.getText();
+		String middlename = mnameField.getText();
+		String lastname = lnameField.getText();
+		String password = String.valueOf(passwordField.getPassword());
+		String phone = phoneField.getText();
+		String email = emailField.getText();
+		Customer customer = new Customer(username, firstname, middlename, lastname, password, phone, email);
+		//Add the customer to the database
+		
+		
+		if(dtbase.insertCustomer(username, firstname, middlename, lastname, phone, email, password)) {
 			new ChooseAction(username);
 		}
 		else {
 			JFrame f = new JFrame();
-			JOptionPane.showMessageDialog(f, "This username has already been used!"); //Popup window
+			JOptionPane.showMessageDialog(f, "This username has already been used or invalid!"); //Popup window
 		}
 		
 	}

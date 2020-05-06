@@ -3,12 +3,16 @@ package Bank.CustomerPlatform;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.sql.*;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import Bank.Utilities.DbHelperPSQL;
 
 public class CustomerLogin implements ActionListener {
 	JFrame frame;
@@ -17,6 +21,8 @@ public class CustomerLogin implements ActionListener {
 	JTextField usernameField;
 	JPasswordField passwordField;
 	JButton login;
+
+	DbHelperPSQL dtbase = new DbHelperPSQL();
 	
 	public CustomerLogin() {
 		frame = new JFrame("Customer Login");
@@ -45,12 +51,12 @@ public class CustomerLogin implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String username =  usernameField.getText();//Get input username
 		//Search the database to see if this user exists
-		if() {
+		if(dtbase.checkUser(username)) {
 			//If this user exists, check whether the password is right
 			String password = String.valueOf(passwordField.getPassword());
-			if() {
+			if(dtbase.checkPwd(username, password)){
 				//If it is right, log in
-				new ChooseAction();
+				new ChooseAction(username);
 			}
 			else {
 				JFrame f = new JFrame();

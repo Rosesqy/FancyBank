@@ -1,4 +1,4 @@
-package fancybank;
+package Bank.CustomerPlatform;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;

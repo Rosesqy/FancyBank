@@ -28,7 +28,7 @@ public class DbHelperPSQL {
       this.username = username;
       this.pwd = pwd;
       this.test();
-      
+
    }
 
    public void test() {
@@ -90,7 +90,7 @@ public class DbHelperPSQL {
       String psql = "INSERT INTO CUSTOMER(USERNAME, FIRST_NAME, MIDDLE_NAME,LAST_NAME, PHONE_NUM, EMAIL, SALT, PWD)"
             + "VALUES(?,?,?,?,?,?,?,?)";
       try {
-         //produce salt and encrypted password
+         // produce salt and encrypted password
          pwdencrypt = new PasswordEncryptionService();
          byte[] salt = null;
          byte[] epwd = null;
@@ -110,7 +110,7 @@ public class DbHelperPSQL {
          pstmt.setBytes(7, salt);
          pstmt.setBytes(8, epwd);
          int result = pstmt.executeUpdate();
-         System.out.println(result+" customer created");
+         System.out.println(result + " customer created");
          pstmt.close();
          c.commit();
          c.close();
@@ -121,7 +121,8 @@ public class DbHelperPSQL {
       return false;
    }
 
-   public boolean insertSavAccount(String cid, double balance, String cursig, double interest, double openfee, double closefee) {
+   public boolean insertSavAccount(String cid, double balance, String cursig, double interest, double openfee,
+         double closefee) {
       Connection c = this.getConnection();
       String psql = "INSERT INTO SAVING_ACC(CUSTOMERID, BALANCE, CURRENCY, INTERESTRATE,OPENFEE, CLOSEFEE)"
             + "VALUES(?,?,?,?,?,?)";
@@ -134,7 +135,7 @@ public class DbHelperPSQL {
          pstmt.setDouble(5, openfee);
          pstmt.setDouble(6, closefee);
          int result = pstmt.executeUpdate();
-         System.out.println(result+" saveacc created");
+         System.out.println(result + " saveacc created");
          pstmt.close();
          c.commit();
          c.close();
@@ -147,8 +148,7 @@ public class DbHelperPSQL {
 
    public boolean insertCheckAccount(String cid, double balance, String cursig, double openfee, double closefee) {
       Connection c = this.getConnection();
-      String psql = "INSERT INTO CECKING_ACC(CUSTOMERID, BALANCE, CURRENCY, OPENFEE, CLOSEFEE)"
-            + "VALUES(?,?,?,?,?)";
+      String psql = "INSERT INTO CECKING_ACC(CUSTOMERID, BALANCE, CURRENCY, OPENFEE, CLOSEFEE)" + "VALUES(?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, cid);
@@ -157,7 +157,7 @@ public class DbHelperPSQL {
          pstmt.setDouble(4, openfee);
          pstmt.setDouble(5, closefee);
          int result = pstmt.executeUpdate();
-         System.out.println(result + " checking account created"); 
+         System.out.println(result + " checking account created");
          pstmt.close();
          c.commit();
          c.close();
@@ -170,8 +170,7 @@ public class DbHelperPSQL {
 
    public boolean insertSecAccount(String cid, double balance, String cursig, double openfee, double closefee) {
       Connection c = this.getConnection();
-      String psql = "INSERT INTO SEC_ACC(CUSTOMERID, BALANCE, CURRENCY,OPENFEE, CLOSEFEE)"
-            + "VALUES(?,?,?,?,?,?)";
+      String psql = "INSERT INTO SEC_ACC(CUSTOMERID, BALANCE, CURRENCY,OPENFEE, CLOSEFEE)" + "VALUES(?,?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setString(1, cid);
@@ -180,7 +179,7 @@ public class DbHelperPSQL {
          pstmt.setDouble(4, openfee);
          pstmt.setDouble(5, closefee);
          int result = pstmt.executeUpdate();
-         System.out.println(result+" secacc created");
+         System.out.println(result + " secacc created");
          pstmt.close();
          c.commit();
          c.close();
@@ -200,7 +199,7 @@ public class DbHelperPSQL {
          pstmt = c.prepareStatement(psql);
          pstmt.setString(1, username);
          result = pstmt.executeUpdate();
-         System.out.println(result+" customer dropped");
+         System.out.println(result + " customer dropped");
          c.commit();
          c.close();
       } catch (SQLException e) {
@@ -213,7 +212,7 @@ public class DbHelperPSQL {
       Connection c = this.getConnection();
       int result = 0;
       String type = account.getType();
-      String psql = "DELETE FROM " +type+"_ACC WHERE " +type+ "ID = ?";
+      String psql = "DELETE FROM " + type + "_ACC WHERE " + type + "ID = ?";
       PreparedStatement pstmt;
       try {
          pstmt = c.prepareStatement(psql);
@@ -227,8 +226,37 @@ public class DbHelperPSQL {
       return (result != 0);
    }
 
-   public boolean checkPwd(Person person, String inpwd){
-      return true;
+   public boolean checkUser(String uname) {
+      Connection c = this.getConnection();
+      String psql = String.format("SELECT * FROM CUSTOMER WHERE USERNAME = '%s'",uname) ;
+      
+      try {
+         Statement stmt = c.createStatement();
+         ResultSet rs = stmt.executeQuery(psql);
+         return rs.next();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return false;
+   }
+
+   public boolean checkPwd(String uname, String inpwd) {
+      Connection c = this.getConnection();
+      pwdencrypt = new PasswordEncryptionService();
+      String psql = String.format("SELECT * FROM CUSTOMER WHERE USERNAME = '%s'",uname) ;
+      
+      try {
+         Statement stmt = c.createStatement();
+         ResultSet rs = stmt.executeQuery(psql);
+         if(rs.next()){
+            byte[] salt = rs.getBytes("SALT");
+            byte[] epwd = rs.getBytes("PWD");
+            return pwdencrypt.authenticate(inpwd, epwd, salt);
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+      return false;
    }
 
    public boolean updateInfo(Person person){
@@ -268,11 +296,12 @@ public class DbHelperPSQL {
       // DbHelperPSQL dtbase = new DbHelperPSQL(url,username,pwd);
       DbHelperPSQL dtbase = new DbHelperPSQL();
       Customer c = new Customer("try2","test","test","test","123456","1@2","0000");
-      dtbase.insertCustomer("try2","test","test","test","123456","1@2","0000");
+      // dtbase.insertCustomer("try2","test","test","test","123456","1@2","0000");
       
       System.out.println("we have "+dtbase.getCusInfo(c));
-      // Account a = 
-      dtbase.dropCustomer("try2");
+      System.out.println(dtbase.checkUser("try"));
+      // System.out.println(dtbase.checkPwd(c.getUname(),"0000"));
+      // dtbase.dropCustomer("try2");
 
 
    }
