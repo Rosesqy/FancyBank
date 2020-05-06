@@ -1,11 +1,9 @@
 package Bank.CustomerPlatform;
 
-import Bank.DAO.*;
+import Bank.DAO.Person.Customer;
 import Bank.Utilities.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.sql.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;

@@ -1,4 +1,6 @@
-package Bank.DAO;
+package Bank.DAO.Account;
+
+import Bank.DAO.Loan;
 
 import java.util.Scanner;
 

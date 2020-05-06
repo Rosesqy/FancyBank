@@ -1,5 +1,6 @@
-package Bank.DAO;
+package Bank.DAO.Person;
 
+import Bank.DAO.Person.Person;
 import Bank.Utilities.PasswordEncryptionService;
 
 import java.security.NoSuchAlgorithmException;

@@ -1,9 +1,12 @@
-package Bank.DAO;
+package Bank.DAO.Person;
+
+import Bank.DAO.Account.Checking;
+import Bank.DAO.Account.Savings;
+import Bank.DAO.Transaction;
 
 import java.util.*;
-import java.io.*;
 
-public class Customer extends Person{
+public class Customer extends Person {
     static Scanner stdin = new Scanner(System.in);
 
     private ArrayList<Savings> mySaveList;

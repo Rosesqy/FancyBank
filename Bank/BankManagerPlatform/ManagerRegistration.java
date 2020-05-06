@@ -2,7 +2,7 @@ package Bank.BankManagerPlatform;
 
 
 
-import Bank.DAO.BankManager;
+import Bank.DAO.Person.BankManager;
 import Bank.Utilities.DbConnectionHelper;
 
 import javax.swing.*;

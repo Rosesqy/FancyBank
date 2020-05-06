@@ -1,5 +1,7 @@
 package Bank.DAO;
 
+import Bank.DAO.Account.Currency;
+
 import java.util.*;
 
 public class Transaction{
@@ -8,7 +10,7 @@ public class Transaction{
 
     private String fromId;
     private String toId;
-    private Currency currency;
+    private Bank.DAO.Account.Currency currency;
     private double amt;
 
     public Transaction(String from, String to, Currency cur, double amt){
