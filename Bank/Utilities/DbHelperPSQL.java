@@ -3,6 +3,7 @@ package Bank.Utilities;
 import Bank.DAO.*;
 import Bank.Utilities.*;
 
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
@@ -121,20 +122,23 @@ public class DbHelperPSQL {
       return false;
    }
 
-   public boolean insertSavAccount(long cid, double balance, String cursig, double interest, double openfee,
-         double closefee) {
+   public boolean insertSavAccount(long cid, double balance, String cursig, double interest, double openfee, double closefee) {
       Connection c = this.getConnection();
+      BigDecimal tbalance = BigDecimal.valueOf(balance);
+      BigDecimal topenfee = BigDecimal.valueOf(openfee);
+      BigDecimal tclosefee = BigDecimal.valueOf(closefee);
       String psql = "INSERT INTO SAVING_ACC(CUSTOMERID, BALANCE, CURRENCY, INTEREST_RATE,OPENFEE, CLOSEFEE)"
-            + "VALUES(?,?::NUMERIC::MONEY,?,?,?,?)";
+      + "VALUES(?,?,?,?,?,?)";
             // CAST(CAST(? AS NUMERIC) AS MONEY))
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setLong(1, cid);
-         pstmt.setDouble(2, balance);
+         pstmt.setBigDecimal(2, tbalance);
+         
          pstmt.setString(3, cursig);
          pstmt.setDouble(4, interest);
-         pstmt.setDouble(5, openfee);
-         pstmt.setDouble(6, closefee);
+         pstmt.setBigDecimal(5, topenfee);
+         pstmt.setBigDecimal(6, tclosefee);
          int result = pstmt.executeUpdate();
          System.out.println(result + " saveacc created");
          pstmt.close();
@@ -149,14 +153,17 @@ public class DbHelperPSQL {
 
    public boolean insertCheckAccount(long cid, double balance, String cursig, double openfee, double closefee) {
       Connection c = this.getConnection();
-      String psql = "INSERT INTO CECKING_ACC(CUSTOMERID, BALANCE, CURRENCY, OPENFEE, CLOSEFEE)" + "VALUES(?,?::NUMERIC::MONEY,?,?,?)";
+      BigDecimal tbalance = BigDecimal.valueOf(balance);
+      BigDecimal topenfee = BigDecimal.valueOf(openfee);
+      BigDecimal tclosefee = BigDecimal.valueOf(closefee);
+      String psql = "INSERT INTO CECKING_ACC(CUSTOMERID, BALANCE, CURRENCY, OPENFEE, CLOSEFEE)" + "VALUES(?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setLong(1, cid);
-         pstmt.setDouble(2, balance);
+         pstmt.setBigDecimal(2, tbalance);
          pstmt.setString(3, cursig);
-         pstmt.setDouble(4, openfee);
-         pstmt.setDouble(5, closefee);
+         pstmt.setBigDecimal(4, topenfee);
+         pstmt.setBigDecimal(5, tclosefee);
          int result = pstmt.executeUpdate();
          System.out.println(result + " checking account created");
          pstmt.close();
@@ -171,14 +178,17 @@ public class DbHelperPSQL {
 
    public boolean insertSecAccount(long cid, double balance, String cursig, double openfee, double closefee) {
       Connection c = this.getConnection();
+      BigDecimal tbalance = BigDecimal.valueOf(balance);
+      BigDecimal topenfee = BigDecimal.valueOf(openfee);
+      BigDecimal tclosefee = BigDecimal.valueOf(closefee);
       String psql = "INSERT INTO SEC_ACC(CUSTOMERID, BALANCE, CURRENCY,OPENFEE, CLOSEFEE)" + "VALUES(?,?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
          pstmt.setLong(1, cid);
-         pstmt.setDouble(2, balance);
+         pstmt.setBigDecimal(2, tbalance);
          pstmt.setString(3, cursig);
-         pstmt.setDouble(4, openfee);
-         pstmt.setDouble(5, closefee);
+         pstmt.setBigDecimal(4, topenfee);
+         pstmt.setBigDecimal(5, tclosefee);
          int result = pstmt.executeUpdate();
          System.out.println(result + " secacc created");
          pstmt.close();
@@ -321,7 +331,8 @@ public class DbHelperPSQL {
       // System.out.println(dtbase.checkUser("1017"));
       // System.out.println(dtbase.checkPwd(c.getUname(),"0000"));
       // dtbase.dropCustomer("try2");
-      dtbase.insertSavAccount(dtbase.checkUser(d.getUname()),400.0, "$", 0.0, 10.0, 10.0);
+      dtbase.insertSavAccount(dtbase.checkUser(d.getUname()),300.0, "$", 0.0, 10.0, 10.0);
+      dtbase.insertSavAccount(dtbase.checkUser(d.getUname()),5000.0, "$", 0.0, 10.0, 10.0);
       System.out.println(dtbase.checkRich(dtbase.checkUser("1017")));
 
    }

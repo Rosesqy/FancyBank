@@ -85,14 +85,15 @@ public class CreateAccount implements ActionListener {
 		String accType = accountType.getItemAt(accountType.getSelectedIndex()).toString();
 		String curType = CurrencyType.getItemAt(CurrencyType.getSelectedIndex()).toString();
 		//Also use username to search the database for userid
-		
+		long uid = dtbase.checkUser(this.username);
 		
 		//If this customer chooses to create a security account, check if he meets the requirement
 		if(accType.equals("Security")) {
 			//Use the username to search the database for savings accounts this customer has
 			//See if any one of his saving accounts has a deposit of more than $5000
-			if() {
+			if(dtbase.checkRich(uid)){
 				//If he meets the requirement, create a security and store information in the database
+				dtbase.insertSecAccount(uid, 0.0, "$", 10.0, 10.0);
 			}
 			else {
 				JFrame f = new JFrame();
@@ -100,22 +101,29 @@ public class CreateAccount implements ActionListener {
 			}
 		}
 		else {
+			String cursig = "";
 			switch(curType) {
+
 			case "1. $ USD":
-				//Create a new account using chosen account type and currency type. Store the information in the database
+				cursig = "$";
 				break;
 			case "2. € EUR":
-				//Create a new account using chosen account type and currency type. Store the information in the database
+				cursig = "€";
 				break;
 			case "3. ￥ YEN":
-				//Create a new account using chosen account type and currency type. Store the information in the database
+				cursig = "￥";
 				break;
 			case "4. ￡ GBP":
-				//Create a new account using chosen account type and currency type. Store the information in the database
+				cursig = "￡";
 				break;
 			case "5. ¥ RMB":
-				//Create a new account using chosen account type and currency type. Store the information in the database
+				cursig = "¥";
 				break;
+			}
+			if(accType.equals("Savings")){
+				dtbase.insertSavAccount(uid, 0.0, cursig, 0.1, 5.0, 5.0);
+			}else{
+				dtbase.insertCheckAccount(uid, 0.0, cursig, 5.0, 5.0);
 			}
 		}
 	}

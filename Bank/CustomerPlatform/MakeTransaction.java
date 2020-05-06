@@ -10,8 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import Bank.Utilities.DbHelperPSQL;
+
 public class MakeTransaction implements ActionListener {
-	
+	DbHelperPSQL dtbase = new DbHelperPSQL();
+
 	String username;
 	JFrame frame;
 	JLabel from;
@@ -97,12 +100,12 @@ public class MakeTransaction implements ActionListener {
 		String tacc = toaccount.getText(); //Use this id to search account information and type
 		double amount = Double.parseDouble(amountField.getText());//Get amount of money
 		//If this account exist,take the next step
-		if() {
+		if(dtbase.checkUser(facc)!= 0) {
 			//Get account type of the account which is going to receive money(Security account should only be his own)
 			String ttype = "Checking/Saving/Security"; //Get from the database
 			//Get userid of both accounts
-			String fuid = "";//Get from the database
-			String tuid = "";//Get from the database
+			long fuid = dtbase.checkUser(facc);//Get from the database
+			long tuid = dtbase.checkUser(tacc);//Get from the database
 			//Get both currency type and exchange rate of the two accounts
 			String fcurtype = "";//Get from the database
 			String tcurtype = "";//Get from the database
@@ -130,7 +133,7 @@ public class MakeTransaction implements ActionListener {
 			else if(ftype.equals("Savings")) {
 				//If the customer is trying to transfer money to a security account, it should only be his own
 				if(ttype.equals("Security")) {
-					if(fuid.equals(tuid)) {
+					if(fuid==tuid) {
 						if(balance*fcurrate >= 500 && amount*fcurrate >= 1000 && (balance-amount)*fcurrate >= 2500) {
 							//Change the balance of the two accounts in the database
 							//Use amount*fcurrate/tcurrate to calculate amount in different currencies

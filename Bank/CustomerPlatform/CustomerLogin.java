@@ -51,7 +51,7 @@ public class CustomerLogin implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String username =  usernameField.getText();//Get input username
 		//Search the database to see if this user exists
-		if(dtbase.checkUser(username)) {
+		if(dtbase.checkUser(username)!=0) {
 			//If this user exists, check whether the password is right
 			String password = String.valueOf(passwordField.getPassword());
 			if(dtbase.checkPwd(username, password)){
