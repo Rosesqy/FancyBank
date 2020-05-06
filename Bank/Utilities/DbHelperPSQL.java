@@ -121,14 +121,15 @@ public class DbHelperPSQL {
       return false;
    }
 
-   public boolean insertSavAccount(String cid, double balance, String cursig, double interest, double openfee,
+   public boolean insertSavAccount(long cid, double balance, String cursig, double interest, double openfee,
          double closefee) {
       Connection c = this.getConnection();
-      String psql = "INSERT INTO SAVING_ACC(CUSTOMERID, BALANCE, CURRENCY, INTERESTRATE,OPENFEE, CLOSEFEE)"
-            + "VALUES(?,?,?,?,?,?)";
+      String psql = "INSERT INTO SAVING_ACC(CUSTOMERID, BALANCE, CURRENCY, INTEREST_RATE,OPENFEE, CLOSEFEE)"
+            + "VALUES(?,?::NUMERIC::MONEY,?,?,?,?)";
+            // CAST(CAST(? AS NUMERIC) AS MONEY))
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
-         pstmt.setString(1, cid);
+         pstmt.setLong(1, cid);
          pstmt.setDouble(2, balance);
          pstmt.setString(3, cursig);
          pstmt.setDouble(4, interest);
@@ -146,12 +147,12 @@ public class DbHelperPSQL {
       return false;
    }
 
-   public boolean insertCheckAccount(String cid, double balance, String cursig, double openfee, double closefee) {
+   public boolean insertCheckAccount(long cid, double balance, String cursig, double openfee, double closefee) {
       Connection c = this.getConnection();
-      String psql = "INSERT INTO CECKING_ACC(CUSTOMERID, BALANCE, CURRENCY, OPENFEE, CLOSEFEE)" + "VALUES(?,?,?,?,?)";
+      String psql = "INSERT INTO CECKING_ACC(CUSTOMERID, BALANCE, CURRENCY, OPENFEE, CLOSEFEE)" + "VALUES(?,?::NUMERIC::MONEY,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
-         pstmt.setString(1, cid);
+         pstmt.setLong(1, cid);
          pstmt.setDouble(2, balance);
          pstmt.setString(3, cursig);
          pstmt.setDouble(4, openfee);
@@ -168,12 +169,12 @@ public class DbHelperPSQL {
       return false;
    }
 
-   public boolean insertSecAccount(String cid, double balance, String cursig, double openfee, double closefee) {
+   public boolean insertSecAccount(long cid, double balance, String cursig, double openfee, double closefee) {
       Connection c = this.getConnection();
       String psql = "INSERT INTO SEC_ACC(CUSTOMERID, BALANCE, CURRENCY,OPENFEE, CLOSEFEE)" + "VALUES(?,?,?,?,?,?)";
       try {
          PreparedStatement pstmt = c.prepareStatement(psql, Statement.RETURN_GENERATED_KEYS);
-         pstmt.setString(1, cid);
+         pstmt.setLong(1, cid);
          pstmt.setDouble(2, balance);
          pstmt.setString(3, cursig);
          pstmt.setDouble(4, openfee);
@@ -261,6 +262,21 @@ public class DbHelperPSQL {
       return false;
    }
 
+   public boolean checkRich(long uid){
+      Connection c = this.getConnection();
+      String psql = String.format("SELECT * FROM SAVING_ACC WHERE CUSTOMERID = '%d' AND BALANCE >= 5000::MONEY AND CURRENCY = '$'",uid) ;
+      
+      try {
+         Statement stmt = c.createStatement();
+         ResultSet rs = stmt.executeQuery(psql);
+         return rs.next();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      return false;
+   }
+
    public boolean updateInfo(Person person){
       return true;
    }
@@ -299,14 +315,14 @@ public class DbHelperPSQL {
       DbHelperPSQL dtbase = new DbHelperPSQL();
       Customer c = new Customer("try2","test","test","test","123456","1@2","0000");
       Customer d = new Customer("1017","test","test","test","123456","1@2","0000");
-      // dtbase.insertCustomer("try2","test","test","test","123456","1@2","0000");
-      dtbase.insertCustomer("1017","test","test","test","123456","1@2","0000");
+      // dtbase.insertCustomer("1017","test","test","test","123456","1@2","0000");
       System.out.println("we have "+dtbase.getCusInfo(c));
-      System.out.println(dtbase.checkUser("try"));
-      System.out.println(dtbase.checkUser("1017"));
+      // System.out.println(dtbase.checkUser("try"));
+      // System.out.println(dtbase.checkUser("1017"));
       // System.out.println(dtbase.checkPwd(c.getUname(),"0000"));
       // dtbase.dropCustomer("try2");
-
+      dtbase.insertSavAccount(dtbase.checkUser(d.getUname()),400.0, "$", 0.0, 10.0, 10.0);
+      System.out.println(dtbase.checkRich(dtbase.checkUser("1017")));
 
    }
 }  
