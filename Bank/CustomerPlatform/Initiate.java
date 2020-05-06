@@ -1,5 +1,8 @@
 package Bank.CustomerPlatform;
 
+import Bank.BankManagerPlatform.BankManagerPlatform;
+import Bank.DAO.Customer;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,10 +38,13 @@ public class Initiate implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button1) {
-			//new ManagerInter();
+			BankManagerPlatform bm = new BankManagerPlatform();
+			bm.setVisible(true);
+			frame.dispose();
 		}
 		else if(e.getSource() == button2) {
-			new CustomerInter();
+			CustomerInter ci = new CustomerInter();
+			frame.dispose();
 		}
 		
 	}
