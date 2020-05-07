@@ -316,7 +316,10 @@ public class DbHelperPSQL {
 	   return info;
    }
 
-   
+   public String getAccountInfo(String username){
+      return "";
+   }
+
    public static void main(String args[]) throws SQLException {
       // String url = "jdbc:postgresql://localhost:5432/FancyBank";
       // String username = "postgres";
