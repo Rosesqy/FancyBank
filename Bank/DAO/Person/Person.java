@@ -1,4 +1,4 @@
-package Bank.DAO;
+package Bank.DAO.Person;
 
 import java.util.*;
 import java.io.*;

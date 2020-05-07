@@ -1,7 +1,7 @@
 package Bank.Utilities;
 
-import Bank.DAO.*;
-import Bank.Utilities.*;
+import Bank.DAO.Account.Account;
+import Bank.DAO.Person.Customer;
 
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;

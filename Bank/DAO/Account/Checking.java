@@ -1,8 +1,10 @@
-package Bank.DAO;
+package Bank.DAO.Account;
+
+import Bank.DAO.Loan;
 
 import java.util.Scanner;
 
-public class Checking extends Account{
+public class Checking extends Account {
 	protected Loan loan; //If the customer owns a loan to the bank in this account
 	protected static double transactionFee;
 	protected static double withdrawalFee;

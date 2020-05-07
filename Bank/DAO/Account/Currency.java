@@ -1,4 +1,4 @@
-package Bank.DAO;
+package Bank.DAO.Account;
 
 /*
  * A class representing currency

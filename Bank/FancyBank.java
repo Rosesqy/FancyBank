@@ -1,20 +1,25 @@
-package Bank.CustomerPlatform;
+package Bank;
+
+import Bank.BankManagerPlatform.BankManagerPlatform;
+import Bank.CustomerPlatform.CustomerInter;
+import Bank.Utilities.CreateDataBase;
+import Bank.Utilities.DbHelperPSQL;
+import Bank.Utilities.InitializeTables;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
 
-public class Initiate implements ActionListener {
+public class FancyBank implements ActionListener {
 	
 	JFrame frame;
 	JButton button1;
 	JButton button2;
 	JLabel label;
 	
-	public Initiate() {
+	public FancyBank() {
 		frame = new JFrame("FancyBank");
 		frame.setSize(500, 400);
 		label = new JLabel("Welcome to the Fancy Bank!");
@@ -30,21 +35,28 @@ public class Initiate implements ActionListener {
 		frame.add(label);
 		frame.setLayout(null);
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button1) {
-			//new ManagerInter();
+			BankManagerPlatform bm = new BankManagerPlatform();
+			bm.setVisible(true);
+			frame.dispose();
 		}
 		else if(e.getSource() == button2) {
-			new CustomerInter();
+			CustomerInter ci = new CustomerInter();
+			frame.dispose();
 		}
 		
 	}
 
-	public static void main(String args[]){
-		Initiate test = new Initiate();
+	public static void main(String args[]) throws SQLException {
+		new CreateDataBase();
+		DbHelperPSQL helper = new DbHelperPSQL();
+			helper.test();
+		new FancyBank();
 	}
 
 }

@@ -4,6 +4,8 @@ package Bank.DAO;
  * Allow customers to have a loan
  */
 
+import Bank.DAO.Account.Currency;
+
 public class Loan {
 	protected Currency currency; //What type of currency is that loan in
 	protected double amount; //How much does a client own the bank

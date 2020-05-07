@@ -1,7 +1,4 @@
-package Bank.DAO;
-
-import java.util.ArrayList;
-import java.util.List;
+package Bank.DAO.Account;
 
 /*
  * An abstract class representing all kinds of accounts including Checking accounts, saving accounts and Security accounts
